@@ -1,0 +1,42 @@
+.root {
+  margin: 4px 0;
+  width: 50%;
+
+  header {
+    cursor: pointer;
+    border: 1px solid #dfdfdf;
+    background: #eeeeee;
+    border-bottom: 1px solid transparent;
+    padding: 4px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    column-gap: 8px;
+    justify-items: flex-end;
+
+    & > div:first-child {
+      justify-self: flex-start;
+    }
+  }
+
+  .content {
+    border-top: none;
+    border: 1px solid #dfdfdf;
+    max-height: 150px;
+    overflow-y: scroll;
+  }
+
+  &.isCollapsed {
+    header {
+      border: 1px solid #dfdfdf;
+    }
+    .time {
+      display: none;
+    }
+  }
+}
+
+.timeEntry {
+  display: flex;
+  gap: 16px;
+  padding: 2px 4px;
+}
