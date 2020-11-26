@@ -19,15 +19,15 @@ export const formatDuration = (ms: number) => {
     .join(':');
 };
 
-const weekdays = new Array(
+const weekdays = [
   'Sunday',
   'Monday',
   'Tuesday',
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday'
-);
+  'Saturday',
+];
 
 export const getDayOfWeek = (date: Date) => {
   const day = date.getDay();

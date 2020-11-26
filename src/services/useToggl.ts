@@ -37,6 +37,7 @@ export function useToggl() {
     if (workspaces && !settingsValid) {
       setWorkspaces(undefined);
     }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [apiToken, settingsValid]);
 
   const fetchTimeEntries = async (workspaceId: number) => {
