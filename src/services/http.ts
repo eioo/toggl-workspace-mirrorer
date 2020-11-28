@@ -7,17 +7,35 @@ export const http = rateLimit(axios.create(), {
   perMilliseconds: 1000,
 });
 
-export async function makeRequest<T>(
+export async function getRequest<T>(
   url: string,
   params?: any,
   config?: AxiosRequestConfig | undefined
 ): Promise<T> {
   const res = await http.get<T>(url, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     auth: {
       username: localStorage.getItem('toggl-api-token') || '',
       password: 'api_token',
     },
     params,
+    ...config,
+  });
+  return res.data;
+}
+
+export async function postRequest<T>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig | undefined
+): Promise<T> {
+  const res = await http.post<T>(url, data, {
+    auth: {
+      username: localStorage.getItem('toggl-api-token') || '',
+      password: 'api_token',
+    },
     ...config,
   });
   return res.data;

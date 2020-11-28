@@ -12,11 +12,13 @@ export const formatDuration = (ms: number) => {
   let secNum = ms / 1000; // don't forget the second param
   let hours = Math.floor(secNum / 3600);
   let minutes = Math.floor((secNum - hours * 3600) / 60);
-  let seconds = secNum - hours * 3600 - minutes * 60;
 
-  return [hours, minutes, seconds]
-    .map((i) => i.toString().padStart(2, '0'))
-    .join(':');
+  let blocks: string[] = [];
+
+  blocks.push(`${hours} h`);
+  blocks.push(`${minutes.toString().padStart(2, '0')} min`);
+
+  return blocks.join(' ');
 };
 
 const weekdays = [

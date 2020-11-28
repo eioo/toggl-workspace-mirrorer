@@ -1,17 +1,21 @@
 .root {
-  margin: 4px 0;
-  width: 50%;
+  &:last-child {
+    header,
+    .content {
+      border-bottom: 1px solid #dfdfdf !important;
+    }
+  }
 
   header {
     cursor: pointer;
     border: 1px solid #dfdfdf;
     background: #eeeeee;
-    border-bottom: 1px solid transparent;
-    padding: 4px;
+    padding: 5px 8px;
     display: grid;
     grid-template-columns: 1fr auto auto;
     column-gap: 8px;
     justify-items: flex-end;
+    font-weight: 500;
 
     & > div:first-child {
       justify-self: flex-start;
@@ -19,15 +23,22 @@
   }
 
   .content {
-    border-top: none;
     border: 1px solid #dfdfdf;
+    border-bottom: none;
+    border-top: none;
     max-height: 150px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
+  &.isMirrored {
+    header {
+      background: rgb(201, 255, 201);
+    }
+  }
   &.isCollapsed {
     header {
       border: 1px solid #dfdfdf;
+      border-bottom: none;
     }
     .time {
       display: none;
@@ -36,7 +47,18 @@
 }
 
 .timeEntry {
-  display: flex;
-  gap: 16px;
-  padding: 2px 4px;
+  $timeWidth: 40px;
+  display: grid;
+  grid-template-columns: $timeWidth 12px $timeWidth 1fr;
+  padding: 0px 4px;
+  border-bottom: 1px solid #f1f1f1;
+
+  & > div {
+    padding: 3px 2px;
+  }
+  & > div:last-child {
+    border-left: 1px solid #f1f1f1;
+    padding-left: 7px;
+    margin-left: 7px;
+  }
 }

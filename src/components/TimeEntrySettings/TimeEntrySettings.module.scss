@@ -1,0 +1,15 @@
+.root {
+  select {
+    margin-bottom: 8px;
+  }
+}
+.arrow {
+  margin: 0 4px;
+}
+
+.grid {
+  & > div {
+    display: grid;
+    grid-template-columns: 120px 185px;
+  }
+}

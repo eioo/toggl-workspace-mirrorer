@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './App.module.scss';
 import DatePicker from './components/DatePicker';
 import Spinner from './components/Spinner';
-import TimeEntryTable from './components/TimeEntryTable';
+import TimeEntryList from './components/TimeEntryList';
+import TimeEntrySettings from './components/TimeEntrySettings';
 import TogglSettings from './components/TogglSettings';
-import WorkspaceSelect from './components/WorkspaceSelect';
+import UserDetails from './components/UserDetails';
 import { getFirstDayOfMonth } from './services/date';
 import { useToggl } from './services/useToggl';
 
@@ -15,16 +16,36 @@ function App() {
     userAgent,
     setUserAgent,
     workspaces,
+    workspaceProjects,
     timeEntries,
     fetchTimeEntries,
     setStartTime,
     setEndTime,
+    setBillable,
     settingsValid,
     sourceWorkspaceId,
     setSourceWorkspaceId,
     targetWorkspaceId,
     setTargetWorkspaceId,
+    currentPage,
+    pageCount,
+    currentUser,
+    selectedProjectId,
+    setSelectedProjectId,
+    mirrorEntries,
+    mirroredDays,
   } = useToggl();
+
+  const onSourceWorkspaceIdChange = useCallback(setSourceWorkspaceId, [
+    sourceWorkspaceId,
+  ]);
+  const onTargetWorkspaceIdChange = useCallback(setTargetWorkspaceId, [
+    targetWorkspaceId,
+  ]);
+  const onProjectIdChange = useCallback(setSelectedProjectId, [
+    selectedProjectId,
+  ]);
+  const onBillableChange = useCallback(setBillable, []);
 
   return (
     <main className={styles.root}>
@@ -35,6 +56,8 @@ function App() {
           userAgent={userAgent}
           onUserAgentChange={setUserAgent}
         />
+
+        <UserDetails user={currentUser} />
 
         {!settingsValid ? null : !workspaces ? (
           <Spinner />
@@ -63,22 +86,17 @@ function App() {
               </tbody>
             </table>
 
-            <h2>Transfer time entries</h2>
-            <p>Select workspaces</p>
-            <div className={styles.row}>
-              <WorkspaceSelect
-                workspaces={workspaces}
-                workspaceId={sourceWorkspaceId}
-                onChange={setSourceWorkspaceId}
-              />
-              ➡️
-              <WorkspaceSelect
-                workspaces={workspaces}
-                workspaceId={targetWorkspaceId}
-                onChange={setTargetWorkspaceId}
-              />
-            </div>
-            <br />
+            <TimeEntrySettings
+              workspaces={workspaces}
+              workspaceProjects={workspaceProjects}
+              selectedProjectId={selectedProjectId}
+              sourceWorkspaceId={sourceWorkspaceId}
+              targetWorkspaceId={targetWorkspaceId}
+              onProjectIdChange={onProjectIdChange}
+              onSourceWorkspaceIdChange={onSourceWorkspaceIdChange}
+              onTargetWorkspaceIdChange={onTargetWorkspaceIdChange}
+              onBillableChange={onBillableChange}
+            />
             <button
               onClick={() =>
                 sourceWorkspaceId && fetchTimeEntries(sourceWorkspaceId)
@@ -86,10 +104,20 @@ function App() {
             >
               Get time entries
             </button>
+            <button disabled={timeEntries.length === 0} onClick={mirrorEntries}>
+              Mirror time entries
+            </button>
           </>
         )}
       </div>
-      <TimeEntryTable dailyEntries={timeEntries} />
+      <div>
+        <TimeEntryList
+          mirroredDays={mirroredDays}
+          dailyEntries={timeEntries}
+          currentPage={currentPage}
+          pageCount={pageCount}
+        />
+      </div>
     </main>
   );
 }

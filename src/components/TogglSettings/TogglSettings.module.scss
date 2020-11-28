@@ -1,0 +1,23 @@
+.root {
+  :global(.row) {
+    flex-wrap: wrap;
+    a {
+      white-space: nowrap;
+    }
+  }
+
+  header {
+    padding-bottom: 5px;
+    padding-top: 3px;
+    font-size: 14px;
+    color &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  input {
+    width: 250px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+  }
+}

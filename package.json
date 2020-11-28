@@ -28,7 +28,8 @@
   "devDependencies": {
     "@types/classnames": "^2.2.10",
     "@types/dateformat": "^3.0.1",
-    "@types/lodash-es": "^4.17.3"
+    "@types/lodash-es": "^4.17.3",
+    "typesafe-event-emitter": "^1.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"
